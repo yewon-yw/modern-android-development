@@ -42,9 +42,16 @@ class MainActivity : AppCompatActivity() {
         binding.textView.text = myViewModel.counter.toString()
 
         binding.button.setOnClickListener {
-            myViewModel.counter += 1
-            binding.textView.text = myViewModel.counter.toString()
-            myViewModel.saveState()
+//            myViewModel.counter += 1
+//            binding.textView.text = myViewModel.counter.toString()
+//            myViewModel.saveState()
+            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1)
+        }
+//        myViewModel.liveCounter.observe(this) { counter ->
+//            binding.textView.text = counter.toString()
+//        }
+        myViewModel.modifiedCounter.observe(this) { counter ->
+            binding.textView.text = counter.toString()
         }
     }
 }
