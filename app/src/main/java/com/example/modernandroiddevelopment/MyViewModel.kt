@@ -14,6 +14,7 @@ class MyViewModel(
     val modifiedCounter : LiveData<String> = Transformations.map(liveCounter) { counter ->
         "$counter 입니다"
     }
+    val hasChecked: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
 
     var counter: Int = savedStateHandle.get<Int>(SAVE_STATE_KEY) ?: _counter
 

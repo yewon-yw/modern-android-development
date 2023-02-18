@@ -3,6 +3,7 @@ package com.example.modernandroiddevelopment
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.modernandroiddevelopment.databinding.ActivityMainBinding
@@ -15,7 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+//        setContentView(binding.root)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
 //        var counter = 100
 //        binding.textView.text = counter.toString()
@@ -34,10 +36,13 @@ class MainActivity : AppCompatActivity() {
 //            binding.textView.text = myViewModel.counter.toString()
 //        }
 
-        val factory = MyViewModelFactory(100, this)
+        val factory = MyViewModelFactory(10, this)
 //        val myViewModel = ViewModelProvider(this,factory).get(MyViewModel::class.java)
         val myViewModel by viewModels<MyViewModel>() { factory }
         // 팩토리를 적용해야하는 경우
+
+        binding.lifecycleOwner = this
+        binding.viewmodel = myViewModel
 
         binding.textView.text = myViewModel.counter.toString()
 
@@ -50,8 +55,9 @@ class MainActivity : AppCompatActivity() {
 //        myViewModel.liveCounter.observe(this) { counter ->
 //            binding.textView.text = counter.toString()
 //        }
-        myViewModel.modifiedCounter.observe(this) { counter ->
-            binding.textView.text = counter.toString()
-        }
+
+//        myViewModel.modifiedCounter.observe(this) { counter ->
+//            binding.textView.text = counter.toString()
+//        }
     }
 }
