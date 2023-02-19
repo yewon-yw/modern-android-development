@@ -18,6 +18,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 //}
 class  MyViewModelFactory(
     private val counter: Int,
+    private val repositoryImpl: MyRepositoryImpl,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null,
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -27,7 +28,7 @@ class  MyViewModelFactory(
         handle: SavedStateHandle
     ): T {
         if (modelClass.isAssignableFrom(MyViewModel::class.java)) {
-            return MyViewModel(counter, handle) as T
+            return MyViewModel(counter, repositoryImpl, handle) as T
         }
         throw IllegalArgumentException("ViewModel class not found")
     }

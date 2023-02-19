@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
 //            binding.textView.text = myViewModel.counter.toString()
 //        }
 
-        val factory = MyViewModelFactory(10, this)
+        val myRepositoryImpl = MyRepositoryImpl(10)
+        val factory = MyViewModelFactory(10, myRepositoryImpl,this)
 //        val myViewModel = ViewModelProvider(this,factory).get(MyViewModel::class.java)
         val myViewModel by viewModels<MyViewModel>() { factory }
         // 팩토리를 적용해야하는 경우
@@ -50,7 +51,8 @@ class MainActivity : AppCompatActivity() {
 //            myViewModel.counter += 1
 //            binding.textView.text = myViewModel.counter.toString()
 //            myViewModel.saveState()
-            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1)
+//            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1)
+            myViewModel.increaseCounter()
         }
 //        myViewModel.liveCounter.observe(this) { counter ->
 //            binding.textView.text = counter.toString()
