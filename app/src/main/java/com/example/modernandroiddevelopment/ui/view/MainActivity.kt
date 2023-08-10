@@ -1,11 +1,9 @@
-package com.example.modernandroiddevelopment
+package com.example.modernandroiddevelopment.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.modernandroiddevelopment.R
 import com.example.modernandroiddevelopment.databinding.ActivityMainBinding
-import com.example.modernandroiddevelopment.ui.view.FavoriteFragment
-import com.example.modernandroiddevelopment.ui.view.SearchFragment
-import com.example.modernandroiddevelopment.ui.view.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
