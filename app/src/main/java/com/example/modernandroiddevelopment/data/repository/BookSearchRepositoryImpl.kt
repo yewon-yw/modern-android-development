@@ -1,10 +1,10 @@
 package com.example.modernandroiddevelopment.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.modernandroiddevelopment.data.api.RetrofitInstance.api
 import com.example.modernandroiddevelopment.data.db.BookSearchDatabase
 import com.example.modernandroiddevelopment.data.model.Book
 import com.example.modernandroiddevelopment.data.model.SearchResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 class BookSearchRepositoryImpl(
@@ -27,7 +27,7 @@ class BookSearchRepositoryImpl(
         db.bookSearchDao().deleteBook(book)
     }
 
-    override fun getFavoriteBooks(): LiveData<List<Book>> {
+    override fun getFavoriteBooks(): Flow<List<Book>> {
         return db.bookSearchDao().getFavoriteBooks()
     }
 }

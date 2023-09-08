@@ -1,8 +1,8 @@
 package com.example.modernandroiddevelopment.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.modernandroiddevelopment.data.model.Book
 import com.example.modernandroiddevelopment.data.model.SearchResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 interface BookSearchRepository {
@@ -17,5 +17,5 @@ interface BookSearchRepository {
 
     suspend fun deleteBooks(book: Book)
 
-    fun getFavoriteBooks(): LiveData<List<Book>>
+    fun getFavoriteBooks(): Flow<List<Book>>
 }

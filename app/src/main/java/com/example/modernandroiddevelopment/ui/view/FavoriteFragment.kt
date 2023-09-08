@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.modernandroiddevelopment.databinding.FragmentFavoriteBinding
 import com.example.modernandroiddevelopment.ui.adapter.BookSearchAdapter
 import com.example.modernandroiddevelopment.ui.viewmodel.BookSearchViewModel
+import com.example.modernandroiddevelopment.util.collectLatestStateFlow
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.Objects
 
 class FavoriteFragment : Fragment() {
@@ -37,12 +43,33 @@ class FavoriteFragment : Fragment() {
         // 뷰가 생성된 후에 초기화해야 하기 때문에 onViewCreated에서 작성
         // 즉, 뷰 인플레이트 및 초기화 후 뷰와 관련된 데이터 작업 및 데이터 의존성을 설정하는 것이 좋음
         bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
-        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner) {
-            bookSearchAdapter.submitList(it)
-        }
 
         setupTouchHelper(view)
         setUpRecyclerView()
+
+//        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner) {
+//            bookSearchAdapter.submitList(it)
+//        }
+
+//        lifecycleScope.launch {
+//            bookSearchViewModel.favoriteBooks.collectLatest {
+//                bookSearchAdapter.submitList(it)
+//            }
+//        }
+
+        // stateFlow 구독이 되면서 FavoriteFragment의 라이프사이클과 동기화됨
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                bookSearchViewModel.favoriteBooks.collectLatest {
+//                    bookSearchAdapter.submitList(it)
+//                }
+//            }
+//        }
+
+        // 확장 함수 사용
+        collectLatestStateFlow(bookSearchViewModel.favoriteBooks){
+            bookSearchAdapter.submitList(it)
+        }
     }
 
     private fun setUpRecyclerView() {
